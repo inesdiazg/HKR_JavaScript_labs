@@ -315,15 +315,15 @@ main { /*the main content has a max width*/
 .timeline ul {
     position: relative;
     display: flex;
-    flex-direction: row-reverse;
-    justify-content: center;
+    flex-direction: row;
+    justify-content: flex-start;
     align-items: stretch;
     gap: var(--space-lg);
     list-style: none;
     margin: 0;
     --line-top: 30px;
     padding: var(--line-top) 0 0 0;
-    overflow: auto;
+    overflow-x: auto; /* only horizontal scroll */
 }
 
 .timeline ul::before {
@@ -338,9 +338,17 @@ main { /*the main content has a max width*/
 
 .timeline li {
     position: relative;
-    flex: 1 1 0;
+    flex: 0 0 250px; /* fixed 250px, so it doesn't get too small*/
     display: flex;
     flex-direction: column;
+}
+
+.timeline li:first-child { /* to center the elements*/
+    margin-left: auto;
+}
+
+.timeline li:last-child {
+    margin-right: auto;
 }
 
 .timeline-box {
