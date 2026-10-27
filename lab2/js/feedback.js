@@ -44,3 +44,51 @@ const updateCounter = () => {
 
 // Listen 'input' event (the counter is triggered when the user writes or deletes)
 inputComments.addEventListener("input", updateCounter);
+
+// 3. VALIDATION FUNCTIONS
+
+// Validates full name
+const validateFullName = () => {
+    // Regular expression and minimum 2 characters
+    const regexName = /^[a-zA-ZÀ-ÿ\s'-]{2,}$/;
+    const value = inputFullname.value;
+    if (value === "") {
+        return "Full name is required.";
+    } else if (!regexName.test(value)) { // if the text does NOT (!) follow the rule
+        return "Please enter a valid name (at least 2 characters, letters only).";
+    } else {
+        return ""; // If there are not errors, return the string empty
+    }
+};
+
+const validateEmail = () => {
+    const value = inputEmail.value;
+    const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (value === "") {
+        return "Email is required.";
+    } else if (!regexEmail.test(value)) { 
+        return "Please enter a valid email address (e.g., name@domain.com).";
+    } else {
+        return "";
+    }
+};
+
+const validateTopic = () => {
+    const value = inputTopic.value;
+    if (value === "") {
+        return "Please select a topic of interest.";
+    } else {
+        return "";
+    }
+};
+
+const validateComments = () => {
+    const value = inputComments.value;
+    if (value === "") {
+        return "Comments are required.";
+    } else if (value.length < 15) {
+        return "Comments must be at least 15 characters long.";
+    } else {
+        return "";
+    }
+}
