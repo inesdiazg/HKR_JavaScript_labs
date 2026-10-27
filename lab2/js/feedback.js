@@ -23,3 +23,24 @@ const charCounter = document.getElementById("char-counter");
 
 // Buttons
 const clearBtn = document.getElementById("clear-btn");
+
+// 2. LIVE CHARACTER COUNTER
+
+// Function that updates text and color of the counter
+const updateCounter = () => {
+    // Get current text length
+    const length = inputComments.value.length;
+    
+    // Update text
+    charCounter.textContent = `${length} characters (minimum 15)`;
+
+    // Change color if it reaches the minimum or not
+    if (length < 15) {
+        charCounter.style.color = "red";
+    } else {
+        charCounter.style.color = "green";
+    }
+};
+
+// Listen 'input' event (the counter is triggered when the user writes or deletes)
+inputComments.addEventListener("input", updateCounter);
