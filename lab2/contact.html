@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact</title>
-    <link rel="stylesheet" href="styles.css" />    
+    <link rel="stylesheet" href="styles.css" />
+    <script src="js/feedback.js"></script>
 </head>
 <body>
     <div id="page-container">
@@ -38,25 +39,61 @@
                 </div>
 
                 <p>Let's get in touch! Send me a message:</p>
-                    <form action="" method="post" class="form">
-                        <div class="form-top">
-                            <div class="form-top-item">
-                                <label for="fname">First name:</label>
-                                <input type="text" id="fname" name="fname"/>
-                            </div>
-                            <div class="form-top-item">
-                                <label for="lname">Last name:</label>
-                                <input type="text" id="lname" name="lname">
-                            </div>
+                    <!-- Form for GRADE 3 -->
+                    <form id="feedback-form" class="form" novalidate>
+                        <!-- Full Name -->
+                        <div class="form-group">
+                            <label for="fullname">Full Name:</label>
+                            <input type="text" id="fullname" name="fullname" required>
+                            <span class="error-msg" id="error-fullname"></span>
                         </div>
-                        <div class="form-bottom">
-                            <label for="email-add">Email address:</label>
-                            <input type="email" name="email" id="email-add">
-                            <label for="msg">Message:</label>
-                            <textarea name="msg" id="msg"></textarea> <!---I learnt in https://www.w3schools.com/ about <textarea>-->
-                            <input type="submit" value="SUBMIT" class="submit-button">
+
+                        <!-- Email -->
+                        <div class="form-group">
+                            <label for="email">Email:</label>
+                            <input type="email" id="email" name="email" required>
+                            <span class="error-msg" id="error-email"></span>
                         </div>
+
+                        <!-- Topic of Interest -->
+                        <div class="form-group">
+                            <label for="topic">Topic of Interest:</label>
+                            <select id="topic" name="topic" required>
+                                <option value="">Please select a topic</option>
+                                <option value="portfolio">Portfolio feedback</option>
+                                <option value="projects">Collaboration on projects</option>
+                                <option value="other">Other</option>
+                            </select>
+                            <span class="error-msg" id="error-topic"></span>
+                        </div>
+
+                        <!-- Comments -->
+                        <div class="form-group">
+                            <label for="comments">Comments:</label>
+                            <textarea id="comments" name="comments" required></textarea>
+                            <div class="counter-wrapper">
+                                <span id="char-counter" class="counter">0 characters (minimum 15)</span>
+                            </div>
+                            <span class="error-msg" id="error-comments"></span>
+                        </div>
+
+                        <!-- Website (optional) -->
+                        <div class="form-group">
+                            <label for="website">Website (optional):</label>
+                            <input type="url" id="website" name="website">
+                            <span class="error-msg" id="error-website"></span>
+                        </div>
+
+                        <!-- Buttons -->
+                        <div class="form-actions">
+                            <button type="submit" class="submit-button">Submit</button>
+                            <button type="button" id="clear-btn" class="clear-button">Clear</button>
+                        </div>
+
+                        <!-- Status area (success message) -->
+                        <div id="status-area" class="status-area" role="status" aria-live="polite"></div>
                     </form>
+
                 <a class="back-home" href="index.html">&#8678; back to Home</a>
             </main>
         </div>
