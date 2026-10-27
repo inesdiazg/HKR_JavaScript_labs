@@ -92,3 +92,28 @@ const validateComments = () => {
         return "";
     }
 }
+
+// 4. UI FEEDBACK FUNCTIONS
+
+const showFieldError = (inputElement, errorElement, message) => {
+    // Show error message
+    errorElement.textContent = message;
+
+    // Add or remove CSS class for border color
+    inputElement.classList.add("input-error");
+    inputElement.classList.remove("input-valid");
+};
+
+const clearFieldError = (inputElement, errorElement, isValid = true) => {
+    // Clear error message
+    errorElement.textContent = "";
+    
+    // If the field is valid, give green border and remove red
+    if (isValid) {
+        inputElement.classList.remove("input-error");
+        inputElement.classList.add("input-valid");
+    } else {
+        // If the field is not valid yet, remove both borders
+        inputElement.classList.remove("input-error", "input-valid");
+    }
+};
