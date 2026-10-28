@@ -156,7 +156,18 @@ form.addEventListener("submit", (event) => {
 
     // 4. If all fields are valid, show the success message
     if (isFullnameValid && isEmailValid && isTopicValid && isCommentsValid && isWebsiteValid) {
-        console.log("All fields are valid! Form submitted successfully.");
+        // Get the user's name to personalize the message
+        const userName = inputFullname.value();
+
+        // Show the success message in the status area
+        statusArea.textContent = 'All fields are valid! Form submitted successfully. Thanks for your feedback, ${userName}';
+
+        // Set a timer to remove the message automatically after 4 seconds
+        setTimeout(() => {
+            statusArea.textContent = "";
+            statusArea.classList.remove("status-success");
+        }, 4000)
+
     } else {
         console.log("There are errors in the form. Please check the fields.");
     }
