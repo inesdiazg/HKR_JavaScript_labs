@@ -48,13 +48,13 @@ inputComments.addEventListener("input", updateCounter);
 // 3. VALIDATION FUNCTIONS
 
 // Validates full name
-const validateFullName = () => {
+const validateFullname = () => {
     // Regular expression and minimum 2 characters
     const regexName = /^[a-zA-ZÀ-ÿ\s'-]{2,}$/;
     const value = inputFullname.value;
     if (value === "") {
         return "Full name is required.";
-    } else if (!regexName.test(value)) { // if the text does NOT (!) follow the rule
+    } else if (!regexName.test(value)) { // if the text does NOT follow the rule
         return "Please enter a valid name (at least 2 characters, letters only).";
     } else {
         return ""; // If there are not errors, return the string empty
@@ -117,3 +117,47 @@ const clearFieldError = (inputElement, errorElement, isValid = true) => {
         inputElement.classList.remove("input-error", "input-valid");
     }
 };
+
+// 5. FORM SUBMISSION AND GLOBAL VALIDATION
+
+// Function that validates a single field and updates the UI accordingly.
+const validateAndUpdateUI = (inputElement, errorElement, validationFunction) => {
+    const errorMessage = validationFunction(); // The specific function to run (e.g.: validateEmail) that will return an error message or an empty string
+    
+    if (errorMessage !== "") {
+        showFieldError(inputElement, errorElement, errorMessage);
+        return false; // There is an error (show it on the screen)
+    } else {
+        clearFieldError(inputElement, errorElement, true);
+        return true; // Everything is fine (show it on the screen)
+    }
+};
+
+// Listen for the 'submit' event (user clicks on the button)
+form.addEventListener("submit", (event) => {
+    // 1. Prevent the page from reloading
+    event.preventDefault();
+
+    // 2. Validate all required fields by calling the previous function, and store the results (true/false) in variables to check them later
+    const isFullnameValid = validateAndUpdateUI(inputFullname, errorFullname, validateFullname);
+    const isEmailValid = validateAndUpdateUI(inputEmail, errorEmail, validateEmail);
+    const isTopicValid = validateAndUpdateUI(inputTopic, errorTopic, validateTopic);
+    const isCommentsValid = validateAndUpdateUI(inputComments, errorComments, validateComments);
+
+    // 3. Validate the optional Website field (using native browser validation) only if the user typed something
+    let isWebsiteValid = true; // start assuming the field is valid
+    if (inputWebsite.value !== "" && !inputWebsite.checkValidity()) {
+        showFieldError(inputWebsite, errorWebsite, "Please enter a valid URL (e.g., https://example.com).");
+        isWebsiteValid = false;
+    } else {
+        // If it's empty or valid, clear error, but only apply the valid green border if the user actually wrote something (not "")
+        clearFieldError(inputWebsite, errorWebsite, inputWebsite.value !== "");
+    }
+
+    // 4. If all fields are valid, show the success message
+    if (isFullnameValid && isEmailValid && isTopicValid && isCommentsValid && isWebsiteValid) {
+        console.log("All fields are valid! Form submitted successfully.");
+    } else {
+        console.log("There are errors in the form. Please check the fields.");
+    }
+});
