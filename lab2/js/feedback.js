@@ -118,7 +118,31 @@ const clearFieldError = (inputElement, errorElement, isValid = true) => {
     }
 };
 
-// 5. FORM SUBMISSION AND GLOBAL VALIDATION
+// 5. RESET FORM FUNCTION
+
+const resetForm = () => {
+    // 1. Reset all input values
+    form.reset();
+    
+    // 2. Clear all error messages
+    errorFullname.textContent = "";
+    errorEmail.textContent = "";
+    errorTopic.textContent = "";
+    errorComments.textContent = "";
+    errorWebsite.textContent = "";
+    
+    // 3. Remove all validation classes (red or green borders) using a loop to avoid repeating the same lines
+    const allInputs = [inputFullname, inputEmail, inputTopic, inputComments, inputWebsite];
+    allInputs.forEach(input => {
+        input.classList.remove("input-error", "input-valid");
+    });
+    
+    // 4. Reset the character counter
+    charCounter.textContent = "0 characters (minimum 15)";
+    charCounter.style.color = "black";
+};
+
+// 6. FORM SUBMISSION AND GLOBAL VALIDATION
 
 // Function that validates a single field and updates the UI accordingly.
 const validateAndUpdateUI = (inputElement, errorElement, validationFunction) => {
@@ -166,9 +190,16 @@ form.addEventListener("submit", (event) => {
         setTimeout(() => {
             statusArea.textContent = "";
             statusArea.classList.remove("status-success");
-        }, 4000)
+        }, 4000);
+
+        // Reset the form
+        resetForm();
 
     } else {
         console.log("There are errors in the form. Please check the fields.");
     }
 });
+
+
+// Listen for the 'click' event on the Clear button
+clearBtn.addEventListener("click", resetForm);
