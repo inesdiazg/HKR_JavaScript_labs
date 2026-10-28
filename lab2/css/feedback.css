@@ -1,0 +1,125 @@
+/* Base styles for the form inputs */
+.form-group {
+    margin-bottom: var(--space-md);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+}
+
+.form-group input, .form-group select, .form-group textarea {
+    padding: var(--space-sm);
+    border: 2px solid #ccc; /* neutral border */
+    border-radius: var(--radius-sm);
+    font-family: var(--font-base);
+    font-size: var(--fs-base);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-group textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.form-group label {
+    font-weight: 600;
+}
+
+/* Focus state (strong visible outline) */
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(29, 104, 121, 0.3);
+}
+
+/* Error state (red border) */
+.form-group input.input-error, .form-group select.input-error, .form-group textarea.input-error {
+    border-color: #d9534f;
+    background-color: #fdf7f7;
+}
+
+/* Valid state (green border) */
+.form-group input.input-valid, .form-group select.input-valid, .form-group textarea.input-valid {
+    border-color: #5cb85c;
+}
+
+/* Error messages */
+.error-msg {
+    color: #d9534f;
+    font-size: var(--fs-sm);
+    font-weight: bold;
+    min-height: 20px;
+}
+
+/* Character counter */
+.counter-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    font-size: var(--fs-sm);
+}
+
+.counter {
+    font-weight: bold;
+}
+
+/* Success status area */
+.status-area {
+    margin-top: var(--space-md);
+    padding: var(--space-md);
+    border-radius: var(--radius-sm);
+    font-weight: bold;
+    text-align: center;
+    display: none; /* hidden by default */
+}
+
+.status-area.status-success {
+    display: block; /* show when the class is added */
+    background-color: #dff0d8;
+    color: #3c763d;
+    border: 2px solid #5cb85c;
+}
+
+/* Submit button*/
+.submit-button {
+    font-size: var(--fs-base);
+    margin-top: var(--space-md);
+    padding: var(--space-sm) var(--space-md);
+    background-color: var(--color-primary);
+    color: var(--color-light);
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    align-self: flex-start;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+.submit-button:hover {
+    background-color: var(--color-secondary);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
+}
+
+/* Clear button */
+.clear-button {
+    font-size: var(--fs-base);
+    margin-top: var(--space-md);
+    padding: var(--space-sm) var(--space-md);
+    background-color: var(--color-primary);
+    color: var(--color-light);
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    align-self: flex-start;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.clear-button:hover {
+    background-color: var(--color-primary);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
+}
+
+/* Form actions (buttons container) */
+.form-actions {
+    display: flex;
+    gap: var(--space-md);
+    margin-top: var(--space-md);
+}
