@@ -51,7 +51,7 @@ inputComments.addEventListener("input", updateCounter);
 const validateFullname = () => {
     // Regular expression and minimum 2 characters
     const regexName = /^[a-zA-ZÀ-ÿ\s'-]{2,}$/;
-    const value = inputFullname.value;
+    const value = inputFullname.value.trim(); // clean spaces
     if (value === "") {
         return "Full name is required.";
     } else if (!regexName.test(value)) { // if the text does NOT follow the rule
@@ -62,7 +62,7 @@ const validateFullname = () => {
 };
 
 const validateEmail = () => {
-    const value = inputEmail.value;
+    const value = inputEmail.value.trim();
     const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (value === "") {
         return "Email is required.";
@@ -140,6 +140,12 @@ const resetForm = () => {
     // 4. Reset the character counter
     charCounter.textContent = "0 characters (minimum 15)";
     charCounter.style.color = "black";
+
+    // 5. Return focus to the first field
+    setTimeout(() => {
+        inputFullname.focus();
+    }, 10) // using only inputFullname.focus(); didn't work because the focus is still on the clear button, so I add a little timer
+    
 };
 
 // 6. FORM SUBMISSION AND GLOBAL VALIDATION
@@ -181,10 +187,13 @@ form.addEventListener("submit", (event) => {
     // 4. If all fields are valid, show the success message
     if (isFullnameValid && isEmailValid && isTopicValid && isCommentsValid && isWebsiteValid) {
         // Get the user's name to personalize the message
-        const userName = inputFullname.value();
+        const userName = inputFullname.value;
 
         // Show the success message in the status area
-        statusArea.textContent = 'All fields are valid! Form submitted successfully. Thanks for your feedback, ${userName}';
+        statusArea.textContent = `All fields are valid! Form submitted successfully. Thanks for your feedback, ${userName}`;
+
+        // Add css class to the success message
+        statusArea.classList.add("status-success");
 
         // Set a timer to remove the message automatically after 4 seconds
         setTimeout(() => {
