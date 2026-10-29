@@ -209,6 +209,40 @@ form.addEventListener("submit", (event) => {
     }
 });
 
-
 // Listen for the 'click' event on the Clear button
 clearBtn.addEventListener("click", resetForm);
+
+// 7. REAL-TIME VALIDATION
+
+// For a better user experience, add an event listener to each input to validate while the user types. This makes the errors disappear and the borders turn green in real-time.
+
+inputFullname.addEventListener("input", () => {
+    validateAndUpdateUI(inputFullname, errorFullname, validateFullname);
+});
+
+inputEmail.addEventListener("input", () => {
+    validateAndUpdateUI(inputEmail, errorEmail, validateEmail);
+});
+
+inputTopic.addEventListener("change", () => {
+    // Use 'change' for the <select> element because the user doesn't type, they select. (https://codefinity.com/courses/v2/80567880-1800-43f0-af76-126b963556b6/9da9c8b5-da93-4aea-8a8f-377d31a6d111/81f120f5-8234-4a85-b9bc-4d9db512834b)
+    validateAndUpdateUI(inputTopic, errorTopic, validateTopic);
+});
+
+inputComments.addEventListener("input", () => {
+    validateAndUpdateUI(inputComments, errorComments, validateComments);
+});
+
+inputWebsite.addEventListener("input", () => {
+    // For the website, only validate if the user has typed something (because it's optional)
+    if (inputWebsite.value !== "") {
+        if (!inputWebsite.checkValidity()) {
+            showFieldError(inputWebsite, errorWebsite, "Please enter a valid URL (e.g., https://example.com).");
+        } else {
+            clearFieldError(inputWebsite, errorWebsite, true);
+        }
+    } else {
+        // If they delete everything, clear the errors and the green border
+        clearFieldError(inputWebsite, errorWebsite, false);
+    }
+});
