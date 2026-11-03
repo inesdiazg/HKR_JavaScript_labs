@@ -86,7 +86,7 @@ const filterSkills = (selectedCategory, clickedButton) => {
     resultsCounter.textContent = `Showing ${currentSkills.length} of ${skillsData.length} skills`;
 
     // Fix the active button visual state
-    const allButtons = document.querySelectorAll('.filter.btn'); // get all buttons
+    const allButtons = document.querySelectorAll('.filter-btn'); // get all buttons
     allButtons.forEach(btn => btn.classList.remove('active')); // remove the 'active' class
     clickedButton.classList.add('active'); // add the 'active' class only to the button that was just clicked
     
