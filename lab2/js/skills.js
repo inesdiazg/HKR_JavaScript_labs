@@ -53,7 +53,7 @@ const renderSkills = () => {
     skillsContainer.innerHTML = cardsHTML;
 };
 
-// Call the function once so the cards appear when the page loads
+// Call the function so the cards appear when the page loads
 renderSkills();
 
 // 3. FILTERING BUTTONS
@@ -80,7 +80,7 @@ const renderFilters = () => {
 
 // 4. ONE FUNCTION TO UPDATE UI
 
-// Keep track of the current filter and sort states
+// Current filter and sort states
 let activeCategory = "All";
 let activeSort = "default";
 

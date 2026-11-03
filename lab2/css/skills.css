@@ -115,3 +115,32 @@
     font-weight: bold;
     align-self: flex-start; /* keeps the label from stretching the whole width */
 }
+
+@media (max-width: 599px) {
+    /* Stack the sort dropdown and counter vertically on small screens */
+    .skills-sort-counter {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-md);
+    }
+
+    .sort-wrapper {
+        flex-direction: column;
+        gap: var(--space-xs);
+    }
+    
+    .sort-wrapper select {
+        width: 100%; /* make the select dropdown full width on mobile */
+    }
+
+    /* Make filter buttons slightly smaller on mobile */
+    .filter-btn {
+        padding: var(--space-xs) var(--space-sm);
+        font-size: var(--fs-xs);
+    }
+    
+    /* Make skill cards full width on mobile */
+    .skills-grid {
+        grid-template-columns: 1fr;
+    }
+}
