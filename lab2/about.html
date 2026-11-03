@@ -32,8 +32,21 @@
                     
                     <div id="skills-controls" class="skills-controls"></div>
                     <div id="skills-sort-counter" class="skills-sort-counter">
+
+                        <div class="sort-wrapper">
+                            <label for="sort-select">Sort by:</label>
+                            <select id="sort-select">
+                                <option value="default">Default</option>
+                                <option value="proficiency">Proficiency (high to low)</option>
+                                <option value="experience">Experience (high to low)</option>
+                                <option value="name">Name (A-Z)</option>
+                            </select>
+                        </div>
+                        
                         <span id="results-counter">Showing 11 of 11 skills</span>
+
                     </div>
+                    
                     <div id="skills-container" class="skills-grid"></div>
 
                 </section>

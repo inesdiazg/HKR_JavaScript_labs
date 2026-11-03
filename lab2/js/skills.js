@@ -25,6 +25,9 @@ const skillsContainer = document.getElementById("skills-container");
 // Refer to the results counter container
 const resultsCounter = document.getElementById("results-counter");
 
+// Refer to the sorting selector
+const sortSelect = document.getElementById("sort-select");
+
 // Store the current state of the skills here, starting with a copy of the original data so we don't destroy the original array
 let currentSkills = [...skillsData]; 
 
@@ -33,12 +36,14 @@ const renderSkills = () => {
     
     // Use .map() to loop through the array and create an HTML string for each skill
     const cardsHTML = currentSkills.map(skill => {
+        // Calculate word based on number of years
+        const yearWord = skill.yearsExperience > 1 ? "years" : "year";
         return `
             <div class="skill-card">
                 <h3>${skill.name}</h3>
                 <span class="category-label">${skill.category}</span>
                 <p><strong>Level:</strong> ${skill.proficiency} / 5</p>
-                <p><strong>Experience:</strong> ${skill.yearsExperience} years</p>
+                <p><strong>Experience:</strong> ${skill.yearsExperience} ${yearWord}</p>
                 <p class="skill-description">${skill.description}</p>
             </div>
         `;
@@ -95,3 +100,36 @@ const filterSkills = (selectedCategory, clickedButton) => {
 };
 
 renderFilters();
+
+// 4. SORTING
+
+// Function to sort the current skills based on the selected option
+const sortSkills = () => {
+    const sortValue = sortSelect.value;
+
+    // Use a switch statement to handle the different options
+    switch (sortValue) {
+        case "proficiency":
+            // Sort high to low (b - a)
+            currentSkills.sort((a, b) => b.proficiency - a.proficiency);
+            break;
+        case "experience":
+            // Sort high to low (b - a)
+            currentSkills.sort((a, b) => b.yearsExperience - a.yearsExperience);
+            break;
+        case "name":
+            // Sort alphabetically (using localeCompare, which handles special characters better than > or <) (https://wfernandoaugusto01.medium.com/sorting-data-alphabetically-localecompare-sort-e3d314708f8c)
+            currentSkills.sort((a, b) => a.name.localeCompare(b.name));
+            break;
+        default:
+            // If "default" is selected, we don't sort, we just reset to the original order
+            currentSkills = [...skillsData];
+            break;
+    }
+
+    // Re-render the cards with the sorted array
+    renderSkills();
+};
+
+// Listen for the 'change' event on the select dropdown
+sortSelect.addEventListener("change", sortSkills);
