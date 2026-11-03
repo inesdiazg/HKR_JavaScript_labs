@@ -76,7 +76,7 @@ const filterSkills = (selectedCategory) => {
         // If "All" is clicked, restore the original data
         currentSkills = [...skillsData]; 
     } else {
-        currentSkills = currentSkills.filter(skill => skill.category === selectedCategory);
+        currentSkills = skillsData.filter(skill => skill.category === selectedCategory); // filter the original skillsData array, not the currentSkills variable (error)
     }
     
     // Re-render the UI with the new currentSkills
