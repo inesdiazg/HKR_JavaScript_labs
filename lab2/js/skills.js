@@ -47,3 +47,40 @@ const renderSkills = () => {
 
 // Call the function once so the cards appear when the page loads
 renderSkills();
+
+// 3. FILTERING
+
+// Get the reference to the controls container in the HTML
+const skillsControls = document.getElementById("skills-controls");
+
+// Extract unique categories from the original array using Set (https://dev.to/bytebodger/de-dupe-js-arrays-with-set-full-stop-29j0) and store them in an array using [...]
+const categories = [...new Set(skillsData.map(skill => skill.category))];
+
+// Function to generate the filter buttons
+const renderFilters = () => {
+    // Start with the "All" button
+    let buttonsHTML = `<button class="filter-btn active" onclick="filterSkills('All')">All</button>`;
+    
+    // Loop through the categories and create a button for each
+    categories.forEach(category => {
+        buttonsHTML += `<button class="filter-btn" onclick="filterSkills('${category}')">${category}</button>`;
+    });
+    
+    // Insert the buttons into the HTML
+    skillsControls.innerHTML = buttonsHTML;
+};
+
+// Function to filter the skills
+const filterSkills = (selectedCategory) => {
+    if (selectedCategory === "All") {
+        // If "All" is clicked, restore the original data
+        currentSkills = [...skillsData]; 
+    } else {
+        currentSkills = currentSkills.filter(skill => skill.category === selectedCategory);
+    }
+    
+    // Re-render the UI with the new currentSkills
+    renderSkills();
+};
+
+renderFilters();
