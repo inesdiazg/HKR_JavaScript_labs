@@ -15,6 +15,7 @@ const skillsData = [
 
     { id: 10, name: "Illustration", category: "Creative", proficiency: 4, yearsExperience: 10, description: "Experience of a whole life drawing and painting." },
     { id: 11, name: "Bird identification", category: "Fieldwork", proficiency: 5, yearsExperience: 10, description: "Birdwatcher for more than 10 years, participation in monitoring programs and census." },
+    { id: 12, name: "JavaScript", category: "Programming", proficiency: 3, yearsExperience: 0.5, description: "Adding dynamic content, filtering, sorting, and form validation to web pages." },
 ];
 
 // 2. RENDER FUNCTION

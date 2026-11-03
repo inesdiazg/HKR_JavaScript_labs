@@ -62,7 +62,7 @@ a { color: var(--color-primary); }
     flex-direction: column;
     min-height: 100vh;
     background-color: var(--color-light);
-    background-image: url("imgs/footer.png");
+    background-image: url("../imgs/footer.png");
     background-repeat: repeat-x;
     background-position: bottom left;
     background-size: auto 300px;
