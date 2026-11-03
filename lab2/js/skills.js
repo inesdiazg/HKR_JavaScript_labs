@@ -22,6 +22,9 @@ const skillsData = [
 // Refer to the container where the cards will go
 const skillsContainer = document.getElementById("skills-container");
 
+// Refer to the results counter container
+const resultsCounter = document.getElementById("results-counter");
+
 // Store the current state of the skills here, starting with a copy of the original data so we don't destroy the original array
 let currentSkills = [...skillsData]; 
 
@@ -59,11 +62,11 @@ const categories = [...new Set(skillsData.map(skill => skill.category))];
 // Function to generate the filter buttons
 const renderFilters = () => {
     // Start with the "All" button
-    let buttonsHTML = `<button class="filter-btn active" onclick="filterSkills('All')">All</button>`;
+    let buttonsHTML = `<button class="filter-btn active" onclick="filterSkills('All', this)">All</button>`; // use 'this' keyword to pass the clicked button to the filterSkills function
     
     // Loop through the categories and create a button for each
     categories.forEach(category => {
-        buttonsHTML += `<button class="filter-btn" onclick="filterSkills('${category}')">${category}</button>`;
+        buttonsHTML += `<button class="filter-btn" onclick="filterSkills('${category}', this)">${category}</button>`;
     });
     
     // Insert the buttons into the HTML
@@ -71,13 +74,21 @@ const renderFilters = () => {
 };
 
 // Function to filter the skills
-const filterSkills = (selectedCategory) => {
+const filterSkills = (selectedCategory, clickedButton) => {
     if (selectedCategory === "All") {
         // If "All" is clicked, restore the original data
         currentSkills = [...skillsData]; 
     } else {
         currentSkills = skillsData.filter(skill => skill.category === selectedCategory); // filter the original skillsData array, not the currentSkills variable (error)
     }
+
+    // Update the counter text
+    resultsCounter.textContent = `Showing ${currentSkills.length} of ${skillsData.length} skills`;
+
+    // Fix the active button visual state
+    const allButtons = document.querySelectorAll('.filter.btn'); // get all buttons
+    allButtons.forEach(btn => btn.classList.remove('active')); // remove the 'active' class
+    clickedButton.classList.add('active'); // add the 'active' class only to the button that was just clicked
     
     // Re-render the UI with the new currentSkills
     renderSkills();
