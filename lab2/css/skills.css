@@ -33,6 +33,12 @@
     border-color: var(--color-primary);
 }
 
+/* Focus state for keyboard navigation */
+.filter-btn:focus-visible {
+    outline: 3px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
 /* Counter and sort */
 .skills-sort-counter {
     text-align: center;

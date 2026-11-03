@@ -67,7 +67,7 @@ const categories = [...new Set(skillsData.map(skill => skill.category))];
 // Function to generate the filter buttons
 const renderFilters = () => {
     // Start with the "All" button
-    let buttonsHTML = `<button class="filter-btn active" onclick="filterSkills('All')">All</button>`;
+    let buttonsHTML = `<button class="filter-btn active" aria-pressed="true" onclick="filterSkills('All')">All</button>`;
     
     // Loop through the categories and create a button for each
     categories.forEach(category => {
@@ -120,6 +120,11 @@ const updateUI = () => {
         // If the button text matches the active category, set it as active
         if (btn.textContent === activeCategory) {
             btn.classList.add('active');
+            btn.setAttribute('aria-pressed', 'false'); // tell screen readers it's NOT pressed
+            if (btn.textContent === activeCategory){
+                btn.classList.add('active');
+                btn.setAttribute('aria-pressed', 'true'); // tell screen readers it's pressed
+            }
         }
     });
 
