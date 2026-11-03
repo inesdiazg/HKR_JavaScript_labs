@@ -56,7 +56,7 @@ const renderSkills = () => {
 // Call the function once so the cards appear when the page loads
 renderSkills();
 
-// 3. FILTERING
+// 3. FILTERING BUTTONS
 
 // Get the reference to the controls container in the HTML
 const skillsControls = document.getElementById("skills-controls");
@@ -67,69 +67,84 @@ const categories = [...new Set(skillsData.map(skill => skill.category))];
 // Function to generate the filter buttons
 const renderFilters = () => {
     // Start with the "All" button
-    let buttonsHTML = `<button class="filter-btn active" onclick="filterSkills('All', this)">All</button>`; // use 'this' keyword to pass the clicked button to the filterSkills function
+    let buttonsHTML = `<button class="filter-btn active" onclick="filterSkills('All')">All</button>`;
     
     // Loop through the categories and create a button for each
     categories.forEach(category => {
-        buttonsHTML += `<button class="filter-btn" onclick="filterSkills('${category}', this)">${category}</button>`;
+        buttonsHTML += `<button class="filter-btn" onclick="filterSkills('${category}')">${category}</button>`;
     });
     
     // Insert the buttons into the HTML
     skillsControls.innerHTML = buttonsHTML;
 };
 
-// Function to filter the skills
-const filterSkills = (selectedCategory, clickedButton) => {
-    if (selectedCategory === "All") {
-        // If "All" is clicked, restore the original data
-        currentSkills = [...skillsData]; 
-    } else {
-        currentSkills = skillsData.filter(skill => skill.category === selectedCategory); // filter the original skillsData array, not the currentSkills variable (error)
+// 4. ONE FUNCTION TO UPDATE UI
+
+// Keep track of the current filter and sort states
+let activeCategory = "All";
+let activeSort = "default";
+
+// Function that applies the filter, then the sort, and then updates everything on screen
+const updateUI = () => {
+    // 1. Start with a copy of the original data
+    let filteredSkills = [...skillsData];
+
+    // 2. Apply filter (if not "All")
+    if (activeCategory !== "All") {
+        filteredSkills = filteredSkills.filter(skill => skill.category === activeCategory);
     }
 
-    // Update the counter text
+    // 3. Apply sort (if not "default")
+    switch (activeSort) {
+        case "proficiency":
+            filteredSkills.sort((a, b) => b.proficiency - a.proficiency); // sort high to low (b - a)
+            break;
+        case "experience":
+            filteredSkills.sort((a, b) => b.yearsExperience - a.yearsExperience); // sort high to low (b - a)
+            break;
+        case "name":
+            filteredSkills.sort((a, b) => a.name.localeCompare(b.name)); // Sort alphabetically (https://wfernandoaugusto01.medium.com/sorting-data-alphabetically-localecompare-sort-e3d314708f8c)
+            break;
+    }
+
+    // 4. Update the global state variable with the result
+    currentSkills = filteredSkills;
+
+    // 5. Update the counter text
     resultsCounter.textContent = `Showing ${currentSkills.length} of ${skillsData.length} skills`;
 
-    // Fix the active button visual state
-    const allButtons = document.querySelectorAll('.filter-btn'); // get all buttons
-    allButtons.forEach(btn => btn.classList.remove('active')); // remove the 'active' class
-    clickedButton.classList.add('active'); // add the 'active' class only to the button that was just clicked
-    
-    // Re-render the UI with the new currentSkills
+    // 6. Update the active button visual state
+    const allButtons = document.querySelectorAll('.filter-btn');  // get all buttons
+    allButtons.forEach(btn => {
+        btn.classList.remove('active');  // remove the 'active' class
+        // If the button text matches the active category, set it as active
+        if (btn.textContent === activeCategory) {
+            btn.classList.add('active');
+        }
+    });
+
+    // 7. Render the cards
     renderSkills();
 };
 
-renderFilters();
 
-// 4. SORTING
+// 5. EVENT LISTENERS
 
-// Function to sort the current skills based on the selected option
-const sortSkills = () => {
-    const sortValue = sortSelect.value;
+// Function to handle filter clicks
+const filterSkills = (selectedCategory) => {
+    activeCategory = selectedCategory;
+    updateUI(); // Tell the function to update everything
+};
 
-    // Use a switch statement to handle the different options
-    switch (sortValue) {
-        case "proficiency":
-            // Sort high to low (b - a)
-            currentSkills.sort((a, b) => b.proficiency - a.proficiency);
-            break;
-        case "experience":
-            // Sort high to low (b - a)
-            currentSkills.sort((a, b) => b.yearsExperience - a.yearsExperience);
-            break;
-        case "name":
-            // Sort alphabetically (using localeCompare, which handles special characters better than > or <) (https://wfernandoaugusto01.medium.com/sorting-data-alphabetically-localecompare-sort-e3d314708f8c)
-            currentSkills.sort((a, b) => a.name.localeCompare(b.name));
-            break;
-        default:
-            // If "default" is selected, we don't sort, we just reset to the original order
-            currentSkills = [...skillsData];
-            break;
-    }
-
-    // Re-render the cards with the sorted array
-    renderSkills();
+// Function to handle sort changes
+const handleSortChange = () => {
+    activeSort = sortSelect.value;
+    updateUI(); // Tell the function to update everything
 };
 
 // Listen for the 'change' event on the select dropdown
-sortSelect.addEventListener("change", sortSkills);
+sortSelect.addEventListener("change", handleSortChange);
+
+// Start the page
+renderFilters();
+updateUI(); // Initial render
